@@ -1,0 +1,6 @@
+{
+  "name": "EasyBook",
+  "description": "Commission-free event operations platform featuring dynamic session-aware attendance, QR verification, live event operations, and verifiable e-certificates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

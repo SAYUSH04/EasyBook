@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Public verification of certificates
+    match /certificates/{certId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Public view of published events and tickets
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /tickets/{ticketId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Registrations & Bookings
+    match /registrations/{regId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true; // allow public registration submission
+    }
+
+    // Teams
+    match /teams/{teamId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    // Users and organizations
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /organizations/{orgId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Attendance blocks and records
+    match /attendanceBlocks/{blockId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /attendanceRecords/{recordId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /attendanceAuditLogs/{logId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Event staff & communications & activities
+    match /eventStaff/{staffId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /communications/{commId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /eventActivities/{actId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+  }
+}
